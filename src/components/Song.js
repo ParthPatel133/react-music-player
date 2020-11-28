@@ -1,10 +1,11 @@
 
 
-const Song = () => {
+const Song = ({ currentSong }) => {
     return (
         <div className="song-container">
-            <h1>song</h1>
-            <h1>image</h1>
+            <img src={currentSong.cover}></img>
+            <h2>{currentSong.artist}</h2>
+            <h3>{currentSong.name}</h3>
         </div>
     )
 }
