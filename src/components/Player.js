@@ -30,12 +30,21 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
         }
     }
 
+    const getTime = (time) => {
+        //formating time
+        let minutes = Math.floor(time / 60);
+        minutes = (minutes >= 10) ? minutes : "0" + minutes;
+        let seconds = Math.floor(time % 60);
+        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+        return minutes + ":" + seconds;
+    }
+
     return (
         <div className='player'>
             <div className='time-control'>
-                <p>Start time</p>
+                <p>{getTime(songInfo.currentTime)}</p>
                 <input type='range' />
-                <p>End time</p>
+                <p>{getTime(songInfo.duration)}</p>
             </div>
             <div className='play-control'>
                 <FontAwesomeIcon className='skip-back' size="2x" icon={faAngleLeft} />
@@ -44,7 +53,11 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
                     className='play' size="2x" icon={faPlay} />
                 <FontAwesomeIcon className='skip-forward' size="2x" icon={faAngleRight} />
             </div>
-            <audio onTimeUpdate={timeUpdateHandler} ref={audioRef} src={currentSong.audio} />
+            <audio
+                onLoadedMetadata={timeUpdateHandler}
+                onTimeUpdate={timeUpdateHandler}
+                ref={audioRef}
+                src={currentSong.audio} />
         </div>
     )
 }
