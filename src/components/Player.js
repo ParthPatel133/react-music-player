@@ -65,7 +65,9 @@ const Player = ({
         }
         if (direction === 'skip-back') {
             if ((currentIndex - 1) % songs.length === -1) {
-                return setCurrentSong(songs[songs.length - 1]);
+                setCurrentSong(songs[songs.length - 1]);
+                playAudio(isPlaying, audioRef);
+                return
             }
             setCurrentSong(songs[(currentIndex - 1) % songs.length])
         }
@@ -78,7 +80,7 @@ const Player = ({
                 <p>{getTime(songInfo.currentTime)}</p>
                 <input min={0} max={songInfo.duration || 0} onChange={dragHandler}
                     value={songInfo.currentTime} type='range' />
-                <p>{getTime(songInfo.duration)}</p>
+                <p>{songInfo.duration ? getTime(songInfo.duration) : "00:00"}</p>
             </div>
             <div className='play-control'>
                 <FontAwesomeIcon
