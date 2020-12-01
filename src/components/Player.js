@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { playAudio } from '../util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faAngleLeft, faAngleRight, faPause } from '@fortawesome/free-solid-svg-icons'
 
@@ -68,6 +69,7 @@ const Player = ({
             }
             setCurrentSong(songs[(currentIndex - 1) % songs.length])
         }
+        playAudio(isPlaying, audioRef);
     }
 
     return (

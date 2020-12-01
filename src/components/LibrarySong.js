@@ -1,3 +1,4 @@
+import { playAudio } from '../util'
 
 const LibrarySong = ({ songs, song, id, setCurrentSong, audioRef, isPlaying, setSongs }) => {
     const songChangeHandler = () => {
@@ -19,15 +20,9 @@ const LibrarySong = ({ songs, song, id, setCurrentSong, audioRef, isPlaying, set
 
         setSongs(newSongs);
 
-        //Check song isPlaying
-        if (isPlaying) {
-            const playPromise = audioRef.current.play();
-            if (isPlaying !== undefined) {
-                playPromise.then((audio) => {
-                    audioRef.current.play();
-                });
-            }
-        }
+        //play song
+        playAudio(isPlaying, audioRef);
+
     }
 
     return (
