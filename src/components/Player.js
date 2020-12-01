@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faAngleLeft, faAngleRight, faPause } from '@fortawesome/free-solid-svg-icons'
 
-const Player = ({ audioRef, songInfo, setSongInfo, currentSong, isPlaying, setIsPlaying }) => {
+const Player = ({ audioRef, songInfo, setCurrentSong, setSongInfo, currentSong, isPlaying, setIsPlaying, songs }) => {
 
     //Event Handelers
     const playSongHandler = () => {
@@ -27,7 +27,19 @@ const Player = ({ audioRef, songInfo, setSongInfo, currentSong, isPlaying, setIs
     const dragHandler = (e) => {
         audioRef.current.currentTime = e.target.value;
         setSongInfo({ ...songInfo, currentTime: e.target.value })
+    }
 
+    const skipTrackHandler = (direction) => {
+        let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+        if (direction === 'skip-forward') {
+            setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+        }
+        if (direction === 'skip-back') {
+            if ((currentIndex - 1) % songs.length === -1) {
+                return setCurrentSong(songs[songs.length - 1]);
+            }
+            setCurrentSong(songs[(currentIndex - 1) % songs.length])
+        }
     }
 
     return (
@@ -41,6 +53,7 @@ const Player = ({ audioRef, songInfo, setSongInfo, currentSong, isPlaying, setIs
             <div className='play-control'>
                 <FontAwesomeIcon
                     className='skip-back'
+                    onClick={() => skipTrackHandler('skip-back')}
                     size="2x"
                     icon={faAngleLeft} />
                 <FontAwesomeIcon
@@ -50,6 +63,7 @@ const Player = ({ audioRef, songInfo, setSongInfo, currentSong, isPlaying, setIs
                     icon={isPlaying ? faPause : faPlay} />
                 <FontAwesomeIcon
                     className='skip-forward'
+                    onClick={() => skipTrackHandler('skip-forward')}
                     size="2x"
                     icon={faAngleRight} />
             </div>
