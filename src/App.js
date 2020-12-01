@@ -36,7 +36,13 @@ function App() {
         setSongInfo={setSongInfo}
         songInfo={songInfo}
       />
-      <Library audioRef={audioRef} isPlaying={isPlaying} songs={songs} setCurrentSong={setCurrentSong} />
+      <Library
+        audioRef={audioRef}
+        setSongs={setSongs}
+        isPlaying={isPlaying}
+        songs={songs}
+        setCurrentSong={setCurrentSong}
+      />
       <audio
         onLoadedMetadata={timeUpdateHandler}
         onTimeUpdate={timeUpdateHandler}
