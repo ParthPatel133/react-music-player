@@ -1,8 +1,7 @@
-import { playAudio } from '../util'
 
 const LibrarySong = ({ songs, song, id, setCurrentSong, audioRef, isPlaying, setSongs }) => {
-    const songChangeHandler = () => {
-        setCurrentSong(song);
+    const songChangeHandler = async () => {
+        await setCurrentSong(song);
         //add active state
         const newSongs = songs.map((song) => {
             if (song.id === id) {
@@ -19,10 +18,7 @@ const LibrarySong = ({ songs, song, id, setCurrentSong, audioRef, isPlaying, set
         })
 
         setSongs(newSongs);
-
-        //play song
-        playAudio(isPlaying, audioRef);
-
+        if (isPlaying) audioRef.current.play();
     }
 
     return (
